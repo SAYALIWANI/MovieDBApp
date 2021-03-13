@@ -23,7 +23,7 @@ class Movie : NSObject {
     var video           : Bool!
     var voteAverage     : Double!
     var voteCount       : Int!
-
+    
 
     init(fromDictionary dictionary: [String:Any]){
         adult           = dictionary["adult"] as? Bool
@@ -86,3 +86,4 @@ class Movie : NSObject {
         return dictionary
     }
 }
+

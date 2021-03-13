@@ -14,6 +14,7 @@ class ResponseData : NSObject{
     var totalPages   : Int!
     var totalResults : Int!
     
+
     init(fromDictionary dictionary: [String:Any]){
         page                = dictionary["page"] as? Int
         totalPages          = dictionary["total_pages"] as? Int

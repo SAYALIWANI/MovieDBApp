@@ -28,7 +28,7 @@ class MovieInfoVC: UIViewController {
         }else{
             //customizeNavigationBar()
         }
-        let vw = self.addTopBar(title: "") as! NavigationBarView
+        let vw = self.addTopBar(title: "Back") as! NavigationBarView
         vw.btnBackClicked = { sender in
             self.back()
         }

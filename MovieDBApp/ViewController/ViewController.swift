@@ -9,16 +9,15 @@ import UIKit
 import DropDown
 
 let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-let baseURL = "https://api.themoviedb.org/3/"
-let appKey = "c9185b3442e2c100e294383f63e7d2f4&query"
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MovieModelDelegate {
     
     @IBOutlet weak var backgroudView    : UIView!
     @IBOutlet weak var lblHeader        : UILabel!
     @IBOutlet weak var txtField         : UITextField!
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView   : UICollectionView!
     
+    var MovieVM         = MovieViewModel()
     var dropDown        : DropDown?
     var arrDropDown     = ["Most Popular Movies", "Least Popular Movies"]
     var movies          : [Movie]!
@@ -27,14 +26,31 @@ class ViewController: UIViewController {
     var baseURLPathforLogo = ""
     var baseURLPathforPoster = ""
     
+    var MoviesData : [Movie]? {
+        didSet {
+            DispatchQueue.main.async {
+                self.setMoviesData()
+            }
+        }
+    }
+    
+    var imagePathURL: MovieImagePath? {
+        didSet {
+            DispatchQueue.main.async {
+                self.setImagePathData()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backgroudView.backgroundColor = UIColor(red: 00/255, green: 29/255, blue: 54/255, alpha: 1.0)
         addTopBar()
         txtField.delegate = self
         lblHeader.text = "Bollywood Movies"
+        self.MovieVM.delegate = self
         DispatchQueue.main.async {
-            self.getResponse()
+            self.MovieVM.CallMovieData()
         }
         // Do any additional setup after loading the view.
     }
@@ -43,9 +59,8 @@ class ViewController: UIViewController {
         
         if let get = getNavigationController(){
             get.setNavigationBarHidden(true, animated: true)
-        }else{
-            //customizeNavigationBar()
         }
+        
         let vw = self.addTopBar(title: "MovieDBApp") as! NavigationBarView
         vw.btnBack.isHidden = true
         
@@ -59,11 +74,9 @@ class ViewController: UIViewController {
             dropDown?.hide()
             switch index{
             case 0 :
-                self.MostPopularity()
-                print("Most Popular")
+                self.sortMostPopularMovies()
             case 1 :
-                self.LeastPopularity()
-                print("Least Popular")
+                self.sortLeastPopularMovies()
             default:
                 return
             }
@@ -84,98 +97,29 @@ class ViewController: UIViewController {
     }
     
     
-    func setupTablevView(){
+    func setupTableView(){
         DispatchQueue.main.async {
             self.registerNib()
-            self.collectionView.reloadData()
         }
     }
     
-    func getResponse(){
+    func setMoviesData(){
         
-        let imageURLString = baseURL + "configuration?api_key=" + appKey
+        self.movies = [Movie]()
+        self.allMovies = [Movie]()
         
-        let urlString = baseURL + "search/movie?api_key=" + appKey + "&query=bollywood"
-        let session = URLSession.shared
-        let request : NSMutableURLRequest = NSMutableURLRequest()
-        request.url = NSURL(string: urlString) as URL?
-        request.httpMethod = "GET"
-        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData// .reloadIgnoringLocalCacheData
-        request.timeoutInterval = 30
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
-            
-            if(data == nil){
-                print("ERROR")
-            }
-            if let jsonData = data{
-                let str = String(decoding: jsonData, as: UTF8.self)
-                if str.isEmpty{
-                    return
-                }
-                
-                let data1 = self.convertToDictionary(text : str)
-                print("dict1 : \(String(describing: data1))")
-                let mainData = ResponseData(fromDictionary: data1 ?? [String : Any]())
-                print("mainData : \(mainData)")
-                self.movies = mainData.results
-                self.allMovies = mainData.results
-                DispatchQueue.main.async {
-                    self.getImagePath()
-                }
-            }
-            else{
-                print("Cannot read data")
-            }
+        for movie in self.MoviesData!{
+            self.movies.append(movie)
+            self.allMovies.append(movie)
         }
-        task.resume()
     }
     
-    func getImagePath(){
-        
-        let imageURLString = baseURL + "configuration?api_key=" + appKey
-        let session = URLSession.shared
-        let request : NSMutableURLRequest = NSMutableURLRequest()
-        request.url = NSURL(string: imageURLString) as URL?
-        request.httpMethod = "GET"
-        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData// .reloadIgnoringLocalCacheData
-        request.timeoutInterval = 30
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
-            
-            if(data == nil){
-                print("ERROR")
-            }
-            if let jsonData = data{
-                let str = String(decoding: jsonData, as: UTF8.self)
-                if str.isEmpty{
-                    return
-                }
-                
-                let data1 = self.convertToDictionary(text : str)
-                print("dict1 : \(String(describing: data1))")
-                let imageData = ImageResources(fromDictionary: data1 ?? [String : Any]())
-                print("imageData : \(imageData)")
-                self.baseURLPathforLogo = imageData.images.secureBaseUrl + imageData.images.profileSizes[2] // ?? "w185")
-                self.baseURLPathforPoster = imageData.images.secureBaseUrl + imageData.images.posterSizes[2] //?? "w342")
-                self.setupTablevView()
-            }
-            else{
-                print("Cannot read data")
-            }
+    func setImagePathData(){
+        if let resultData = self.imagePathURL {
+            self.baseURLPathforLogo = (resultData.secureBaseUrl) + (resultData.profileSizes[2])
+            self.baseURLPathforPoster = (resultData.secureBaseUrl) + (resultData.posterSizes[2])
         }
-        task.resume()
-    }
-    
-    func convertToDictionary(text: String) -> [String: Any]? {
-        if let data = text.data(using: .utf8) {
-            do {
-                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        return nil
+        setupTableView()
     }
     
     func openMovieInfoVC(data : Movie){
@@ -190,13 +134,10 @@ class ViewController: UIViewController {
     }
     
     //MARK : Sorting functions
-    func MostPopularity(){
-
+    func sortMostPopularMovies(){
+        
         if self.movies != nil{
             tempArray = self.movies.sorted(by: { $0.popularity ?? 0 >  $1.popularity ?? 0})
-        }
-        for popularity in tempArray{
-            print(popularity.popularity)
         }
         DispatchQueue.main.async {
             self.movies = self.tempArray
@@ -204,13 +145,10 @@ class ViewController: UIViewController {
         }
     }
     
-    func LeastPopularity(){
+    func sortLeastPopularMovies(){
         
         if self.movies != nil{
             tempArray = self.movies.sorted(by: { $0.popularity ?? 0 <  $1.popularity ?? 0})
-        }
-        for popularity in tempArray{
-            print(popularity.popularity)
         }
         DispatchQueue.main.async {
             self.movies = self.tempArray
@@ -238,9 +176,9 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource{
 }
 
 extension ViewController : UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+        
         return CGSize(width: (collectionView.frame.size.width / 2) - 20 , height: 160)
     }
 }

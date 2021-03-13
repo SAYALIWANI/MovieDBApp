@@ -25,6 +25,7 @@
 		5B7CFE1025F96D83006BFCAF /* MovieInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CFE0F25F96D83006BFCAF /* MovieInfoVC.swift */; };
 		5B7CFE3425F971A6006BFCAF /* ResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CFE3325F971A6006BFCAF /* ResponseData.swift */; };
 		5B7CFE3925F971C3006BFCAF /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CFE3825F971C3006BFCAF /* Movie.swift */; };
+		5B80CFC125FCFB4300F2F4C1 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B80CFC025FCFB4300F2F4C1 /* MovieViewModel.swift */; };
 		5BD70A9E25FCB9DC00E27A85 /* FloatRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD70A9D25FCB9DC00E27A85 /* FloatRatingView.swift */; };
 		5BD70AA725FCBE5F00E27A85 /* MovieInfoTblViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD70AA525FCBE5F00E27A85 /* MovieInfoTblViewCell.swift */; };
 		5BD70AA825FCBE5F00E27A85 /* MovieInfoTblViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BD70AA625FCBE5F00E27A85 /* MovieInfoTblViewCell.xib */; };
@@ -74,6 +75,7 @@
 		5B7CFE0F25F96D83006BFCAF /* MovieInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoVC.swift; sourceTree = "<group>"; };
 		5B7CFE3325F971A6006BFCAF /* ResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseData.swift; sourceTree = "<group>"; };
 		5B7CFE3825F971C3006BFCAF /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		5B80CFC025FCFB4300F2F4C1 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		5BD70A9D25FCB9DC00E27A85 /* FloatRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatRatingView.swift; sourceTree = "<group>"; };
 		5BD70AA525FCBE5F00E27A85 /* MovieInfoTblViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoTblViewCell.swift; sourceTree = "<group>"; };
 		5BD70AA625FCBE5F00E27A85 /* MovieInfoTblViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieInfoTblViewCell.xib; sourceTree = "<group>"; };
@@ -134,11 +136,11 @@
 			children = (
 				5B72401525FA01A40077771D /* Cell */,
 				5B7CFE3225F97152006BFCAF /* DataModel */,
+				5B80CFBF25FCFB1500F2F4C1 /* ViewModel */,
 				5B7CFDF425F96888006BFCAF /* NavigationBar */,
+				5B80CFC825FD299100F2F4C1 /* ViewController */,
 				5B6B3F7C25F7F0370098949C /* AppDelegate.swift */,
 				5B6B3F7E25F7F0370098949C /* SceneDelegate.swift */,
-				5B6B3F8025F7F0370098949C /* ViewController.swift */,
-				5B7CFE0F25F96D83006BFCAF /* MovieInfoVC.swift */,
 				5B6B3F8225F7F0370098949C /* Main.storyboard */,
 				5B6B3F8525F7F03F0098949C /* Assets.xcassets */,
 				5B6B3F8725F7F03F0098949C /* LaunchScreen.storyboard */,
@@ -196,6 +198,23 @@
 				5B72403F25FAA6C80077771D /* ImageResources.swift */,
 			);
 			path = DataModel;
+			sourceTree = "<group>";
+		};
+		5B80CFBF25FCFB1500F2F4C1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5B80CFC025FCFB4300F2F4C1 /* MovieViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5B80CFC825FD299100F2F4C1 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B6B3F8025F7F0370098949C /* ViewController.swift */,
+				5B7CFE0F25F96D83006BFCAF /* MovieInfoVC.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		740093DCF282F51C85819B0C /* Frameworks */ = {
@@ -397,6 +416,7 @@
 				5B72401F25FA0EF30077771D /* MovieCollViewCell.swift in Sources */,
 				5B6B3F7D25F7F0370098949C /* AppDelegate.swift in Sources */,
 				5B7CFE3425F971A6006BFCAF /* ResponseData.swift in Sources */,
+				5B80CFC125FCFB4300F2F4C1 /* MovieViewModel.swift in Sources */,
 				5B7CFE3925F971C3006BFCAF /* Movie.swift in Sources */,
 				5BD70A9E25FCB9DC00E27A85 /* FloatRatingView.swift in Sources */,
 				5B7CFE1025F96D83006BFCAF /* MovieInfoVC.swift in Sources */,

@@ -23,12 +23,12 @@ extension UIViewController{
             // Fallback on earlier versions
             vw.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 74)
         }
-
+        
         vw.titleText = title
         self.view.addSubview(vw)
         return vw
     }
-     
+    
     func back(){
         if (self.navigationController != nil){
             self.navigationController?.popViewController(animated: true)
@@ -51,7 +51,7 @@ extension UIViewController{
 
 extension UIView{
     
-     class func fromNib(named: String? = nil) -> Self {
+    class func fromNib(named: String? = nil) -> Self {
         let name = named ?? "\(Self.self)"
         guard let nib = Bundle.main.loadNibNamed(name, owner: nil, options: nil) else {
             fatalError("missing expected nib named: \(name)")
@@ -61,23 +61,6 @@ extension UIView{
             fatalError("view of type \(Self.self) not found in \(nib)")
         }
         return view
-    }
-}
-
-
-public func getNavigationController() -> UINavigationController?{
-    
-    if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController{
-         return navigationController
-     } else {
-         return nil
-     }
-}
-
-func presentViewController(_ viewController: UIViewController) {
-    if let topViewController = UIApplication.topMostViewController() {
-        viewController.modalPresentationStyle = .fullScreen
-        topViewController.present(viewController, animated: true, completion: nil)
     }
 }
 
@@ -94,13 +77,36 @@ extension UIApplication{
     }
     
     class func topMostViewController(base: UIViewController? = UIApplication.shared.currentWindow?.rootViewController) -> UIViewController? {
-//        if let nav = base as? UINavigationController {
-//            return topMostViewController(base: nav.visibleViewController)
-//        }
-//        if let presented = base?.presentedViewController {
-//            return topMostViewController(base: presented)
-//        }
         return base
     }
+}
+
+extension String {
+    //return string value into dictionary
+    func convertToDictionary() -> [String: Any]? {
+        if let data = self.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+}
+
+public func getNavigationController() -> UINavigationController?{
     
+    if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController{
+        return navigationController
+    } else {
+        return nil
+    }
+}
+
+func presentViewController(_ viewController: UIViewController) {
+    if let topViewController = UIApplication.topMostViewController() {
+        viewController.modalPresentationStyle = .fullScreen
+        topViewController.present(viewController, animated: true, completion: nil)
+    }
 }

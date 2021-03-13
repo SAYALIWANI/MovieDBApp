@@ -1,6 +1,5 @@
 //
 //  NavigationBarView.swift
-//  BajajFineserv_SuperApp
 //
 //  Created by SayaliWani on 03/03/21.
 //  Copyright © 2021 test. All rights reserved.

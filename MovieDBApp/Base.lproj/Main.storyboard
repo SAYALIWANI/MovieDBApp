@@ -30,7 +30,7 @@
                                         <color key="textColor" red="0.094977266559882881" green="0.10398740691919525" blue="0.1767215150775332" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="SEARCH MOVIE NAME" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ki7-5s-EHK">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="SEARCH MOVIE NAME" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ki7-5s-EHK">
                                         <rect key="frame" x="10" y="10" width="374" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="bK8-0W-mko"/>
@@ -105,6 +105,7 @@
                     </view>
                     <connections>
                         <outlet property="backgroudView" destination="8bC-Xf-vdC" id="mLq-I6-85z"/>
+                        <outlet property="btnSearch" destination="e1N-sG-q8T" id="9N2-P0-ZSm"/>
                         <outlet property="collectionView" destination="kci-db-bFl" id="qQK-Nv-35L"/>
                         <outlet property="lblHeader" destination="xgn-wV-Pwq" id="dG7-BL-1SX"/>
                         <outlet property="txtField" destination="Ki7-5s-EHK" id="XKn-jo-V7r"/>

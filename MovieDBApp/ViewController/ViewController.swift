@@ -16,6 +16,7 @@ class ViewController: UIViewController, MovieModelDelegate {
     @IBOutlet weak var lblHeader        : UILabel!
     @IBOutlet weak var txtField         : UITextField!
     @IBOutlet weak var collectionView   : UICollectionView!
+    @IBOutlet weak var btnSearch        : UIButton!
     
     var MovieVM         = MovieViewModel()
     var dropDown        : DropDown?
@@ -194,6 +195,7 @@ extension ViewController : UITextFieldDelegate{
         
         DispatchQueue.main.async {
             self.movies = txtAfterUpdate == "" ? self.allMovies : filteredMovies
+            txtAfterUpdate == "" ? self.btnSearch.setImage(UIImage(named: "search"), for: .normal) : self.btnSearch.setImage(UIImage(named: "closeButton"), for: .normal)
             self.collectionView.reloadData()
         }
         return true

@@ -49,6 +49,7 @@ class ViewController: UIViewController, MovieModelDelegate {
         addTopBar()
         txtField.delegate = self
         lblHeader.text = "Bollywood Movies"
+        //txtField.attributedPlaceholder = NSAttributedString(string: "Search Movie", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray.cgColor])
         self.MovieVM.delegate = self
         DispatchQueue.main.async {
             self.MovieVM.CallMovieData()
